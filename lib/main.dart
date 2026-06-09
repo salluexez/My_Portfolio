@@ -323,6 +323,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
           SingleChildScrollView(
             controller: _scrollController,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 PortfolioSection(
                   key: _sectionKeys[0],
@@ -377,11 +378,13 @@ class PortfolioSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 1240),
-        child: child,
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1240),
+          child: child,
+        ),
       ),
     );
   }
@@ -732,6 +735,8 @@ class _TypewriterRoleState extends State<TypewriterRole>
   @override
   Widget build(BuildContext context) {
     final palette = context.palette;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final fontSize = screenWidth > 600 ? 27.0 : 20.0;
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
@@ -742,7 +747,7 @@ class _TypewriterRoleState extends State<TypewriterRole>
         return Text(
           '> ${role.substring(0, math.min(visibleCount, role.length))}|',
           style: TextStyle(
-            fontSize: 27,
+            fontSize: fontSize,
             fontWeight: FontWeight.w900,
             color: palette.textPrimary,
             height: 1.2,
@@ -1085,8 +1090,14 @@ class SectionShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final palette = context.palette;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final eyebrowFontSize = screenWidth > 600 ? 54.0 : 32.0;
+    final titleFontSize = screenWidth > 600 ? 23.0 : 18.0;
     return Padding(
-      padding: EdgeInsets.only(top: 92, bottom: bottomPadding),
+      padding: EdgeInsets.only(
+        top: screenWidth > 600 ? 92 : 54,
+        bottom: bottomPadding,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -1094,7 +1105,7 @@ class SectionShell extends StatelessWidget {
             eyebrow,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 54,
+              fontSize: eyebrowFontSize,
               height: 1.02,
               fontWeight: FontWeight.w900,
               color: palette.textPrimary,
@@ -1107,7 +1118,7 @@ class SectionShell extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 23,
+                fontSize: titleFontSize,
                 height: 1.35,
                 fontWeight: FontWeight.w900,
                 color: palette.textSecondary,
